@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="iqaa.xxzh.msl.bean.DocBean" table="t_doc_info">
+  <id column="doc_id" name="id">
+   <generator class="native"/>
+  </id>
+  <property column="doc_name" generated="never" lazy="false"
+   length="255" name="docName" type="java.lang.String"/>
+  <property column="file_path" generated="never" lazy="false"
+   length="255" name="path" type="java.lang.String"/>
+  <property column="add_time" generated="never" lazy="false"
+   name="addtime" type="java.util.Date"/>
+  <property column="isDelete" generated="never" lazy="false"
+   name="isDelete" type="java.lang.Boolean"/>
+  <property column="content" generated="never" lazy="false" name="content"/>
+  <property column="encoding" generated="never" lazy="false" name="encoding"/>
+<!--   <property column="status" generated="never" lazy="false" name="status" type="java.lang.String"/> -->
+  <property column="mark" name="mark" type="java.lang.Integer" ></property>
+  <many-to-one class="iqaa.xxzh.common.bean.UserBean" column="user_id" name="userBean"/>
+ </class>
+ <!-- 问题 -->
+ <class name="iqaa.xxzh.msl.bean.Question" table="t_question">
+  <id column="q_id" name="id">
+   <generator class="native"/>
+  </id>
+  <property column="q_subject" generated="never" lazy="false"
+   length="50" name="subject"/>
+  <property column="q_content" generated="never" lazy="false"
+   length="200" name="content"/>
+  <property column="add_time" generated="never" lazy="false" name="addtime"/>
+  <property column="click_times" generated="never" lazy="false" name="clickRate"/>
+  <many-to-one cascade="save-update" class="iqaa.xxzh.msl.bean.Answer"
+   column="standard_answer_id" name="standardAnswer" unique="true"/>
+  <many-to-one column="operator_id" name="operator" not-null="true"/>
+  <many-to-one column="doc_id" name="doc"/>
+  <!-- <set name="relatedAnswer" table="t_question_answer" cascade="none" inverse="true">
+    			<key column="q_id"></key>
+    			<many-to-many column="answer_id" class="iqaa.xxzh.msl.bean.Answer"></many-to-many>
+    		</set> -->
+ </class>
+ <class name="iqaa.xxzh.msl.bean.Answer" table="t_answer">
+  <id column="answer_id" name="id">
+   <generator class="native"/>
+  </id>
+  <property column="a_subject" generated="never" lazy="false"
+   length="50" name="subject"/>
+  <property column="answer_content" generated="never" lazy="false"
+   length="1000" name="content"/>
+  <property column="answer_location" generated="never" lazy="false"
+   length="255" name="link"/>
+  <property column="add_time" generated="never" lazy="false" name="addtime"/>
+  <many-to-one class="iqaa.xxzh.common.bean.UserBean"
+   column="operator_id" name="operator"/>
+  <many-to-one class="iqaa.xxzh.msl.bean.DocBean" column="doc_id" name="doc"/>
+  <one-to-one name="standardQuestion" property-ref="standardAnswer"/>
+  <!-- <set name="extendQuestion" table="t_question_answer" cascade="none">
+    			<key column="answer_id"></key>
+    			<many-to-many column="q_id" class="iqaa.xxzh.msl.bean.Question"></many-to-many>
+    		</set> -->
+ </class>
+ <class table="_lexicon" name="iqaa.xxzh.msl.bean.Lexicon">
+  <id column="id" name="id" type="java.lang.Long"> 
+   <generator class="native"></generator>
+  </id>
+  <property name="word" column="word"></property>
+  <property name="times" column="times" type="java.lang.Integer"></property>
+ </class>
+ <class name="iqaa.xxzh.msl.bean.CssSelector" table="css_selector">
+ 	<id column="id" name="id" type="java.lang.Long">
+ 		<generator class="native"></generator>
+ 	</id>
+ 	<property name="name"></property>
+ 	<property name="questionSelector"></property>
+ 	<property name="answerSelector"></property>
+ 	<property name="themeSelector"></property>
+ </class>
+</hibernate-mapping>

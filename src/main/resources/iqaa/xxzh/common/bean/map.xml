@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping>
+    	<!-- 角色映射 -->
+    	<class name="iqaa.xxzh.common.bean.Role" table="t_role">
+    		<id name="roleid" column="role_id" type="java.lang.String" length="32">
+    			<generator class="uuid"></generator>
+    		</id>
+    		<property name="rolename" column="role_name" type="java.lang.String" length="50"></property>
+    		<property name="addtime" column="add_time" type="java.util.Date" ></property>
+    	</class>
+    	<!-- 角色映射 -->
+    	
+    	<!-- 用户信息表映射 -->
+    	<class name="iqaa.xxzh.common.bean.UserBean" table="t_user">
+    		<id name="userId" column="user_id" type="java.lang.String" length="32">
+    			<generator class="uuid"></generator>
+    		</id>
+    		<property name="username" column="user_name" type="java.lang.String" length="60"></property>
+    		<property name="password" column="user_pwd" type="java.lang.String" length="32"></property>
+    		<property name="salt" column="salt" type="java.lang.String" length="10"></property>
+    		<property name="isLock" column="is_lock" type="java.lang.Boolean"></property>
+    		<property name="addtime" column="add_time" type="java.util.Date"></property>
+    		<many-to-one name="role" class="iqaa.xxzh.common.bean.Role" column="role_id" lazy="false"></many-to-one>
+    	</class>
+    	<!-- 用户信息表映射 -->
+    	
+    </hibernate-mapping>

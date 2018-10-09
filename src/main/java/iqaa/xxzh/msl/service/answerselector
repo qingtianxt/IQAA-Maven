@@ -1,0 +1,9 @@
+div.content-block > div.help-center-title > p.text
+div.content-block.dev-lists
+div.help-body.cf > div.help-main > div.helpContent > div.help-details > div.ca_details > div.tab_content.tab-content > div.tab_sub_content.tab_sub_content_scroll.tab-pane > ul.terms_list > li > div.item > p
+div.help-body.cf > div.help-main > div.helpContent > div.help-details.webhelp > div:nth-child(2)
+div.record-content > div.rec-item > div.content
+div.record-content > div.rec-panel > div.content
+div.tabbox.beginner.tab2 div.beg-text p
+div.content-block-section.base-platform div.titleBar p.descript
+div.help-body.cf div.help-main div.helpContent div.help-details.webhelp div

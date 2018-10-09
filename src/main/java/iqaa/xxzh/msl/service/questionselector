@@ -1,0 +1,9 @@
+div.content-block > div.help-center-title > h3.tit
+div.content-block.dev-lists > h1.block-title
+div.help-body.cf > div.help-main > div.helpContent > div.help-details > div.ca_details > div.tab_content.tab-content > div.tab_sub_content.tab_sub_content_scroll.tab-pane > ul.terms_list > li  > div.item > h5
+div.help-body.cf > div.help-main > div.helpContent > div.help-details.webhelp > h1.topictitle1
+div.record-main > div.record-content > div.rec-item > p.caption
+div.record-main > p.caption.wb-caption
+div.tabbox.beginner.tab2 div.beg-text div.beg-title
+div.content-block-section.base-platform div.titleBar h3.caption-main
+div.help-body.cf div.help-main div.helpContent div.help-details.webhelp p.hc-title

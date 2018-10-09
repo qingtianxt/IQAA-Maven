@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.action.excludePattern" value="/static/.*?" />
+	<constant name="struts.multipart.maxSize" value="20971520"></constant>
+
+	<package name="default" namespace="/" extends="struts-default">
+		<interceptors>
+			<interceptor name="loginIntercepter" class="iqaa.xxzh.msl.filter.LoginIntercepter">
+				<param name="excludeMethods">login</param>
+				<param name="excludeMethods">sign_in</param>
+			</interceptor>
+			<interceptor-stack name="myInterceptorStack">
+				<interceptor-ref name="loginIntercepter"></interceptor-ref>
+				<interceptor-ref name="defaultStack">
+					<param name="fileUpload.allowedExtensions">.html,.htm</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myInterceptorStack"></default-interceptor-ref>
+
+		<global-results>
+			<result name="login" type="redirect">/index.html</result>
+		</global-results>
+		<action name="manage*" class="manageAction" method="{1}">
+			<result name="login success" type="redirect">/index.jsp</result>
+			<result name="login fail">/index.html</result>
+			<result name="list">/manage/user_list.jsp</result>
+			<result name="toList" type="chain">
+				<param name="actionName">manageshowUser</param>
+				<param name="addMsg">${actionMessages[0]}</param>
+			</result>
+			<result name="modify">/index.jsp</result>
+		</action>
+		<action name="*Role" class="roleAction" method="{1}">
+			<!-- <result name="list">/kb/page_fregement.jsp</result> -->
+		</action>
+	</package>
+
+
+	<package name="/document" extends="struts-default" namespace="/document">
+
+		<interceptors>
+			<interceptor name="loginIntercepter" class="iqaa.xxzh.msl.filter.LoginIntercepter">
+			</interceptor>
+			<interceptor-stack name="myInterceptorStack">
+				<interceptor-ref name="loginIntercepter"></interceptor-ref>
+				<interceptor-ref name="defaultStack">
+					<!-- <param name="fileUpload.allowedExtensions">.html,.htm</param> -->
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myInterceptorStack"></default-interceptor-ref>
+
+		<global-results>
+			<result name="login" type="redirect">/index.html</result>
+		</global-results>
+		<!-- 上传文件的action -->
+		<action name="receiveFile" class="receiveFileAction">
+			<param name="savePath">/WEB-INF/upload</param>
+		</action>
+		<action name="*Document" class="documentAction" method="{1}">
+			<param name="savePath">/WEB-INF/upload</param>
+
+			<!-- 显示提取的问题 -->
+			<result name="extract">/kb/comfirm.jsp</result>
+			<!-- 显示文件列表 -->
+			<result name="show">/document/list_doc.jsp</result>
+			<!-- 显示文档类容 -->
+			<result name="content">${doc.path}</result>
+			<!-- 显示文件内容 -->
+			<result name="showdetail">/document/showDetail.jsp</result>
+			<!-- 上传文件 -->
+			<result name="upload success">/document/add.jsp</result>
+			<result name="upload fail">/document/add.jsp</result>
+
+			<!-- 删除文件 -->
+			<result name="delete" type="chain">getPageDocument</result>
+
+			<!-- 下载文件 -->
+			<result name="download" type="stream">
+				<param name="contentType">
+					text/plain,
+					text/html,
+					application/msword,
+					application/vnd.ms-powerpoint,
+					application/vnd.ms-excel
+				</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+				<param name="bufferSize">40960</param>
+			</result>
+		</action>
+		<action name="selector*" class="cssSelectorAction" method="{1}">
+			<result name="list">/document/analysis_rule.jsp</result>
+		</action>
+	</package>
+
+	<package name="/kb" extends="struts-default" namespace="/kb">
+		<interceptors>
+			<interceptor name="loginIntercepter" class="iqaa.xxzh.msl.filter.LoginIntercepter">
+			</interceptor>
+			<interceptor-stack name="myInterceptorStack">
+				<interceptor-ref name="loginIntercepter"></interceptor-ref>
+				<interceptor-ref name="defaultStack">
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myInterceptorStack"></default-interceptor-ref>
+		<global-results>
+			<result name="login" type="redirect">/index.html</result>
+		</global-results>
+
+
+		<action name="*Kb" class="kbAction" method="{1}">
+			<result name="list">/kb/list.jsp</result>
+			<result name="showdetail">/kb/detail.jsp</result>
+			<result name="update">/kb/update.jsp</result>
+		</action>
+		<action name="*question" class="questionAction" method="{1}">
+			<result name="show">/kb/content.jsp</result>
+			<result name="batchselect">/kb/questionlist.jsp</result>
+			<result name="backselect">/kb/questionlist.jsp</result>
+		</action>
+	</package>
+	<package name="/interactive" extends="struts-default"
+		namespace="/interactive">
+		<action name="predict" class="interactiveAction">
+		</action>
+	</package>
+
+	<package name="QA" extends="struts-default" namespace="/QA">
+		<action class="QAAction" name="QA_*" method="{1}">
+		</action>
+	</package>
+</struts>
